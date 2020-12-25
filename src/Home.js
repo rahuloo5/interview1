@@ -5,15 +5,48 @@ import { Component } from 'react';
 import { Tab } from 'bootstrap';
 
 export default class Home extends Component{
+
+
+    validateNumber = evt => {
+        var theEvent = evt || window.event;
+    
+        // Handle paste
+        if (theEvent.type === "paste") {
+          key = theEvent.clipboardData.getData("text/plain");
+        } else {
+          // Handle key press
+          var key = theEvent.keyCode || theEvent.which;
+          key = String.fromCharCode(key);
+        }
+        var regex = /[0-9]|\./;
+        if (!regex.test(key)) {
+          theEvent.returnValue = false;
+          if (theEvent.preventDefault) theEvent.preventDefault();
+        }
+      };
+
+      validateEmail=(emailField)=>{
+        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+        if (reg.test(emailField.target.value) == false) 
+        {
+            alert('Invalid Email Address');
+            return false;
+        }
+
+        return true;
+
+}
+
     render(){
         return(
                 <div className="conatiner">
-                    <h3>ADD and Delete Data</h3>
+                    <h3>Add and Delete Data</h3>
                     <ProfileConsumer>
                         {(value)=>{
                             return(
                                 <Table size="sm" variant="dark" >
-                                    <tbody><tr>
+                                        <tbody><tr>
                                         
                                         <th>Name</th>
                                         <th>Email</th>
@@ -23,11 +56,11 @@ export default class Home extends Component{
                                         <tr>
                                        
                                        <td>  <input type="text"  placeholder = "Enter name" value={value.name} onChange={(e)=>{value.updateValue(e,"name")}}/></td>
-                                       <td> <input type="email" placeholder= "Enter Email" value={value.email} onChange={(e)=>{value.updateValue(e,"email")}}/></td>
+                                       <td> <input type="email" placeholder= "Enter Email" value={value.email} onChange={(e)=>{value.updateValue(e,"email")}} onBlur={this.validateEmail}  /></td>
                                        <td> <input type="text" placeholder="Enter Address" value={value.address} onChange={(e)=>{value.updateValue(e,"address")}}/> </td>
-                                      <td> <input type="tel" placeholder="Enter Mobile No." value={value.mobile} onChange={(e)=>{value.updateValue(e,"mobile")}}/></td> 
+                                      <td> <input type="tel" placeholder="Enter Mobile No." value={value.mobile} onChange={(e)=>{value.updateValue(e,"mobile")}} onKeyPress={this.validateNumber}/></td> 
                                        
-                                       <td><Button size ="sm" onClick={()=>{value.onSave(value.id)}}>{value.id ?"save":"add new"}</Button></td>
+                                       <td><Button size ="sm" onClick={()=>{value.onSave(value.id)}}>{value.id?"save":"add new"}</Button></td>
 
                                   </tr>
                                         {value.allData.map(info=>{
