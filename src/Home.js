@@ -25,6 +25,17 @@ export default class Home extends Component{
         }
       };
 
+      validateName=(name)=>{
+
+        if(!name.target.value){
+            alert(" Please enter Name")
+            return false
+        }
+        else {
+            return true;
+        }
+      }
+
       validateEmail=(emailField)=>{
         var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
@@ -55,7 +66,7 @@ export default class Home extends Component{
                                         </tr>
                                         <tr>
                                        
-                                       <td>  <input type="text"  placeholder = "Enter name" value={value.name} onChange={(e)=>{value.updateValue(e,"name")}}/></td>
+                                       <td>  <input type="text"  placeholder = "Enter name" value={value.name} onChange={(e)=>{value.updateValue(e,"name")}} onBlur={this.validateName}/></td>
                                        <td> <input type="email" placeholder= "Enter Email" value={value.email} onChange={(e)=>{value.updateValue(e,"email")}} onBlur={this.validateEmail}  /></td>
                                        <td> <input type="text" placeholder="Enter Address" value={value.address} onChange={(e)=>{value.updateValue(e,"address")}}/> </td>
                                       <td> <input type="tel" placeholder="Enter Mobile No." value={value.mobile} onChange={(e)=>{value.updateValue(e,"mobile")}} onKeyPress={this.validateNumber}/></td> 
