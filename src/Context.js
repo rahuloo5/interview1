@@ -13,7 +13,8 @@ const ProfileContext = React.createContext();
         email:'',
         address:'',
         mobile:'',
-        updateEdit:[]
+        updateEdit:[],
+       
     }
 
 
@@ -34,18 +35,30 @@ const ProfileContext = React.createContext();
             mobile:selectRecord['mobile']
         })
     }
-    updateValue=(e,test)=>{
+    updateValue=(e,input)=>{
+        
        
-        if(test==="name"){
+        if(input==="name"){
             this.state.name = e.target.value;
         }
-        if(test==="email"){
-            this.state.email = e.target.value;
+        if(input==="email"){
+            //let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+            //if(!e.target.value.match(regEmail )){
+               // return  alert("wrong email")
+            //}
+            
+                this.state.email = e.target.value;
+
+          
+
+            
+    
         }
-        if(test==="address"){
+        if(input==="address"){
             this.state.address = e.target.value;
         }
-        if(test==="mobile"){
+        if(input==="mobile"){
             this.state.mobile = e.target.value;
         }
         const tempProf =[this.state.id , this.state.name, this.state.email,this.state.address,this.state.mobile];
@@ -71,16 +84,16 @@ const ProfileContext = React.createContext();
             Record["mobile"] = this.state.updateEdit[4];
             this.setState({
                 allData:[...this.state.allData],
-                id :"" ,name:"", email:"", address:"",mobile:""
+                id :"",name:"", email:"", address:"",mobile:""
             })
-
-
-        }else{
+ }
+ else{
             const MaxId = Math.max(...this.state.allData.map(item=>item.id));
-            const id = MaxId +1;
+            const id = MaxId+1;
+            //console.log(id)
             const newArr=[];
         
-        
+        newArr['id'] = id
         newArr['name'] = this.state.updateEdit[1];
         newArr['email'] = this.state.updateEdit[2];
         newArr['address'] = this.state.updateEdit[3];
